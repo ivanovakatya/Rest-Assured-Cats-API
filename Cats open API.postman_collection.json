@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "91b995b4-248b-4cbd-9e02-71b2a3affbcb",
+		"name": "Cats open API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cat random fact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validate response variable fact contain string\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fact).to.be.a(\"string\");",
+							"});",
+							"",
+							"pm.test(\"Validate response variable length contains number\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Validate fact variable is present\", () => {",
+							"    console.log(pm.collectionVariables.get(\"fact\"));",
+							"    console.log(pm.response.json().fact);",
+							"});",
+							"",
+							"pm.test(\"Validate length variable is present\", () => {",
+							"    console.log(pm.collectionVariables.get(\"length\"));",
+							"    console.log(pm.response.json().length);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "mM73Cr49T6vo7ITrdo4m3dO2Ye4yxPrJGJVsWLZA"
+					}
+				],
+				"url": {
+					"raw": "https://catfact.ninja/fact",
+					"protocol": "https",
+					"host": [
+						"catfact",
+						"ninja"
+					],
+					"path": [
+						"fact"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cats breeds",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validate Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Validate response variable current_page contains numberical value\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.current_page).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Validate all data fields contains string value\", function () {",
+							"    _.each(pm.response.json().data, (cat) => { ",
+							"    pm.expect(cat.breed).to.be.a(\"string\");",
+							"    pm.expect(cat.country).to.be.a(\"string\");",
+							"    pm.expect(cat.origin).to.be.a(\"string\");",
+							"    pm.expect(cat.coat).to.be.a(\"string\"); ",
+							"    pm.expect(cat.pattern).to.be.a(\"string\"); ",
+							"    })",
+							"});",
+							"",
+							"pm.test(\"Validate all data fields are present\", () => {",
+							"    _.each(pm.response.json().data, (cat) => {    ",
+							"        cat.breed !== null;",
+							"        cat.country !== null;",
+							"        cat.origin !== null;",
+							"        cat.coat !== null;",
+							"        cat.pattern !== null;",
+							"    })",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "mM73Cr49T6vo7ITrdo4m3dO2Ye4yxPrJGJVsWLZA"
+					}
+				],
+				"url": {
+					"raw": "https://catfact.ninja/breeds",
+					"protocol": "https",
+					"host": [
+						"catfact",
+						"ninja"
+					],
+					"path": [
+						"breeds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List of cat facts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validate response variable current_page contains numberical value\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.current_page).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Validate fact variable contains string value\", function () {",
+							"    _.each(pm.response.json().data, (cat) => { ",
+							"    pm.expect(cat.fact).to.be.a(\"string\");",
+							"    ",
+							"    })",
+							"});",
+							"",
+							"pm.test(\"Validate length variable contains numerical value\", function () {",
+							"    _.each(pm.response.json().data, (cat) => { ",
+							"    pm.expect(cat.length).to.be.a(\"number\");",
+							"    ",
+							"    })",
+							"});",
+							"",
+							"pm.test(\"Validate data fields are present\", () => {",
+							"    _.each(pm.response.json().data, (cat) => {    ",
+							"        cat.fact !== null;",
+							"        cat.length !== null;",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "jUTdxo2HDy58a0ZjJBsfOw5bKqeUFsKOoIICPxV2"
+					}
+				],
+				"url": {
+					"raw": "https://catfact.ninja/facts",
+					"protocol": "https",
+					"host": [
+						"catfact",
+						"ninja"
+					],
+					"path": [
+						"facts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
